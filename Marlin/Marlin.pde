@@ -1478,6 +1478,7 @@ void manage_inactivity(byte debug)
     }
   #endif
   check_axes_activity();
+  GPIOR0 = 0; // for simavr, has no effect anywhere else
 }
 
 void kill()
