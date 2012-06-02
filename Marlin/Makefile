@@ -122,7 +122,6 @@ CXXINCS = ${addprefix -I ,${VPATH}}
 # gnu99 - c99 plus GCC extensions
 #CSTANDARD = -std=gnu99
 #CDEBUG = -g$(DEBUG)
-CWARN = -Wall -Wstrict-prototypes
 CTUNING = -funsigned-char -funsigned-bitfields -fpack-struct \
 	-fshort-enums -w -ffunction-sections -fdata-sections \
 	-DARDUINO=22
@@ -134,8 +133,9 @@ CEXTRA += -g -gdwarf-2
 CTUNING += 	-fno-inline-small-functions \
 			-Wl,--relax,--gc-sections
 
-CFLAGS = $(CDEBUG) $(CDEFS) $(CINCS) -O$(OPT) $(CWARN) $(CEXTRA) $(CTUNING)
-CXXFLAGS =         $(CDEFS) $(CINCS) -O$(OPT) -Wall    $(CEXTRA) $(CTUNING)
+CPPFLAGS = $(CDEFS) $(CINCS) -mmcu=$(MCU) $(CWARN) $(CTUNING) 
+CFLAGS = $(CDEBUG) -O$(OPT) $(CEXTRA) -Wall -Wstrict-prototypes 
+CXXFLAGS = -O$(OPT) $(CEXTRA) -Wall 
 #ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs 
 LDFLAGS = -lm
 
@@ -261,19 +261,19 @@ extcoff: $(TARGET).elf
 
 	# Link: create ELF output file from library.
 applet/$(TARGET).elf: applet/$(TARGET).cpp applet/core.a Configuration.h
-	@echo "  CXX   $@"
-	@$(CC) $(ALL_CXXFLAGS) -Wl,--gc-sections -o $@ applet/$(TARGET).cpp -L. applet/core.a $(LDFLAGS)
+	@echo "  LD   $@"
+	@$(CC) $(CPPFLAGS) $(CXXFLAGS) -Wl,--gc-sections -o $@ applet/$(TARGET).cpp -L. applet/core.a $(LDFLAGS)
 
 applet/core.a: $(OBJ)
 	@for i in $(OBJ); do echo "  AR    $$i"; $(AR) rcs applet/core.a $$i; done
 
 applet/%.o: %.c Configuration.h Configuration_adv.h $(MAKEFILE)
 	@echo "  CC    $@"
-	@$(CC) -MMD -c $(ALL_CFLAGS) $< -o $@
+	@$(CC) -MMD -c $(CPPFLAGS) $(CFLAGS) $< -o $@
 
 applet/%.o: %.cpp Configuration.h Configuration_adv.h $(MAKEFILE)
 	@echo "  CXX   $@"
-	@$(CXX) -MMD -c $(ALL_CXXFLAGS) $< -o $@
+	@$(CXX) -MMD -c $(CPPFLAGS) $(CXXFLAGS) $< -o $@
 
 
 # Target: clean project.
