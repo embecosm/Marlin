@@ -181,7 +181,8 @@ const bool Z_ENDSTOPS_INVERTING = true; // set to true to invert the logic of th
 // default settings 
 //#define //DEFAULT_AXIS_STEPS_PER_UNIT   {79.87, 79.87, 2566, 563,78} // Al's TVRR
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   {81.26, 80.01, 2561, 599.14} // Michel TVRR old
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80.00, 79.84, 2560, 599.14} // Michel TVRR
+//#define DEFAULT_AXIS_STEPS_PER_UNIT   {80.00, 79.84, 2560, 599.14} // Michel TVRR
+#define DEFAULT_AXIS_STEPS_PER_UNIT {80.00, 79.84, 2560, 737.85} // Embecosm TVRR
 
 #ifndef DEFAULT_AXIS_STEPS_PER_UNIT
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {78.7402,78.7402,200*8/3,760*1.1}  // default steps per unit for ultimaker 
