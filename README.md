@@ -1,3 +1,7 @@
+# Embecosm Fork of Standard Marlin Firmware
+
+This version has settings specific to the Embecosm TVRRUG Prusa-Mendel Rep Rap.
+
 WARNING: 
 --------
 THIS IS RELEASE CANDIDATE 2 FOR MARLIN 1.0.0
